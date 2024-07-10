@@ -47,7 +47,7 @@ endpoint_name = f'agents_{catalog}-{db}-{MODEL_NAME}'[:60]
 
 # Our frontend application will hit the model endpoint we deployed.
 # Because dbdemos let you change your catalog and database, let's make sure we deploy the app with the proper endpoint name
-yaml_app_config = {"command": ["uvicorn", "main:app", "--workers", "1"],
+yaml_app_config = {"command": ["uvicorn", "main:app", "--workers", "4"],
                     "env": [{"name": "MODEL_SERVING_ENDPOINT", "value": endpoint_name}]
                   }
 try:
@@ -76,6 +76,8 @@ except:
 # MAGIC # your endpoint will directly be setup with proper permissions when you deploy your app
 # MAGIC w = WorkspaceClient()
 # MAGIC available_endpoints = [x.name for x in w.serving_endpoints.list()]
+# MAGIC print(available_endpoints)
+# MAGIC print(w.current_user.me().display_name)
 # MAGIC
 # MAGIC
 # MAGIC def respond(message, history, dropdown):
@@ -155,7 +157,7 @@ helper = LakehouseAppHelper()
 #helper.list()
 #Delete potential previous app version
 #helper.delete("dbdemos-rag-chatbot-app")
-app_details = helper.create("dbdemos-rag-chatbot-app", app_description="Your Databricks assistant")
+app_details = helper.create("dbdemos-rag-chatbot-app-taylor", app_description="Your Databricks assistant")
 
 # COMMAND ----------
 
@@ -180,11 +182,11 @@ w = w.serving_endpoints.set_permissions(
 
 # COMMAND ----------
 
-helper.deploy("dbdemos-rag-chatbot-app", os.path.join(os.getcwd(), 'chatbot_app'))
+helper.deploy("dbdemos-rag-chatbot-app-taylor", os.path.join(os.getcwd(), 'chatbot_app'))
 
 # COMMAND ----------
 
-helper.details("dbdemos-rag-chatbot-app")
+helper.details("dbdemos-rag-chatbot-app-taylor")
 
 # COMMAND ----------
 

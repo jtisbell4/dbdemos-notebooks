@@ -10,6 +10,8 @@ app = FastAPI()
 # your endpoint will directly be setup with proper permissions when you deploy your app
 w = WorkspaceClient()
 available_endpoints = [x.name for x in w.serving_endpoints.list()]
+print(available_endpoints)
+print(w.current_user.me().display_name)
 
 
 def respond(message, history, dropdown):
